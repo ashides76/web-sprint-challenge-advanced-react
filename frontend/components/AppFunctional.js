@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import axios from 'axios';
+import axios from 'axios'
 
 // Suggested initial states
 const initialMessage = ''
@@ -12,6 +12,7 @@ export default function AppFunctional(props) {
   // You can delete them and build your own logic from scratch.
   const gridSize = 3;
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  console.log('currentIndex:', currentIndex)
   const [steps, setSteps] = useState(initialSteps);
   const [message, setMessage] = useState(initialMessage);
   const [email, setEmail] = useState(initialEmail);
@@ -63,6 +64,8 @@ export default function AppFunctional(props) {
   }
 
   function move(direction) {
+    // This event handler can use the helper above to obtain a new index for the "B",
+    // and change any states accordingly.
     const nextIndex = getNextIndex(direction);
     if (nextIndex !== currentIndex) {
       setCurrentIndex(nextIndex);
@@ -72,10 +75,12 @@ export default function AppFunctional(props) {
   }
 
   function onChange(evt) {
+    // You will need this to update the value of the input.
     setEmail(evt.target.value);
   }
 
   async function onSubmit(evt) {
+    // Use a POST request to send a payload to the server.
     evt.preventDefault();
   
     if (!email) {
@@ -124,7 +129,7 @@ export default function AppFunctional(props) {
       <div id="grid">
         {
           [...Array(gridSize * gridSize).keys()].map(idx => (
-            <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
+            <div key={idx} className={`square${idx === currentIndex ? ' active' : ''}`}>
               {idx === currentIndex ? 'B' : null}
             </div>
           ))
@@ -145,5 +150,5 @@ export default function AppFunctional(props) {
         <input id="submit" type="submit"></input>
       </form>
     </div>
-  );
+  )
 }
