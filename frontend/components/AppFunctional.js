@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import axios from 'axios';
 
 // Suggested initial states
 const initialMessage = ''
@@ -62,8 +63,6 @@ export default function AppFunctional(props) {
   }
 
   function move(direction) {
-    // This event handler can use the helper above to obtain a new index for the "B",
-    // and change any states accordingly.
     const nextIndex = getNextIndex(direction);
     if (nextIndex !== currentIndex) {
       setCurrentIndex(nextIndex);
@@ -73,39 +72,44 @@ export default function AppFunctional(props) {
   }
 
   function onChange(evt) {
-    // You will need this to update the value of the input.
     setEmail(evt.target.value);
   }
 
   async function onSubmit(evt) {
-    // Use a POST request to send a payload to the server.
     evt.preventDefault();
-
+  
+    if (!email) {
+      setMessage("Ouch: email is required");
+      return;
+    }
+  
     const { x, y } = getXY(currentIndex);
-
+  
     const payload = {
       x,
       y,
       steps,
       email,
     };
-
+  
     try {
-      const response = await fetch('http://localhost:9000/api/result', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:9000/api/result', payload, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
       });
-
-      if (!response.ok) {
-        throw new Error('Server error');
+  
+      if (response.status !== 200) {
+        setMessage(`Server error: ${response.statusText}`);
+        return;
       }
-
-      const result = await response.json();
-      setMessage(result.message);
-      reset();
+  
+      const result = response.data;
+  
+      if (result) {
+        setMessage(result.message);
+        setEmail(initialEmail)
+      } 
     } catch (error) {
       setMessage('Error submitting the form.');
     }
