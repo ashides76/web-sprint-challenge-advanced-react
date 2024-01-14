@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import AppFunctional from './AppFunctional';
@@ -7,25 +8,20 @@ jest.mock('axios');
 describe('AppFunctional Component', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    render(<AppFunctional />);
   });
 
   test('renders the component', () => {
-    // eslint-disable-next-line react/react-in-jsx-scope
-    render(<AppFunctional />);
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
   });
 
   test('updates email input on change', () => {
-    // eslint-disable-next-line react/react-in-jsx-scope
-    render(<AppFunctional />);
     const emailInput = screen.getByTestId('email');
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     expect(emailInput.value).toBe('test@example.com');
   });
 
   test('prevents submission with no email', async () => {
-  // eslint-disable-next-line react/react-in-jsx-scope
-    render(<AppFunctional />);
     const submitButton = screen.getByTestId('submit');
     fireEvent.click(submitButton);
 
@@ -40,8 +36,7 @@ describe('AppFunctional Component', () => {
       status: 200,
       data: { success: true, message: 'Test success message' },
     });
- // eslint-disable-next-line react/react-in-jsx-scope
-    render(<AppFunctional />);
+
     const emailInput = screen.getByTestId('email');
     const submitButton = screen.getByTestId('submit');
 
@@ -59,8 +54,7 @@ describe('AppFunctional Component', () => {
 
   test('handles form submission error', async () => {
     axios.post.mockRejectedValue({ message: 'Test error message' });
- // eslint-disable-next-line react/react-in-jsx-scope
-    render(<AppFunctional />);
+
     const emailInput = screen.getByTestId('email');
     const submitButton = screen.getByTestId('submit');
 
