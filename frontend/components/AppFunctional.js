@@ -67,10 +67,34 @@ export default function AppFunctional(props) {
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
     const nextIndex = getNextIndex(direction);
+
+    // Check if the move is valid
     if (nextIndex !== currentIndex) {
       setCurrentIndex(nextIndex);
       setSteps(steps + 1);
       setMessage(getXYMessage(nextIndex));
+    } else {
+      // Handle invalid move and set appropriate message
+      switch (direction) {
+        case 'left':
+          setMessage("You can't go left");
+          break;
+        case 'up':
+          setMessage("You can't go up");
+          break;
+        case 'right':
+          setMessage("You can't go right");
+          break;
+        case 'down':
+          setMessage("You can't go down");
+          break;
+        default:
+          setMessage('Invalid move');
+      }
+    }
+  
+    if (nextIndex !== currentIndex) {
+      setMessage('');
     }
   }
 
