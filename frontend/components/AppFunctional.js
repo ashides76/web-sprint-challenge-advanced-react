@@ -132,7 +132,6 @@ export default function AppFunctional(props) {
         setMessage(`Server error: ${response.statusText}`);
         return;
       }
-  
       const result = response.data;
   
       if (result) {
@@ -140,7 +139,12 @@ export default function AppFunctional(props) {
         setEmail(initialEmail)
       } 
     } catch (error) {
-      setMessage('Error submitting the form.');
+      console.log(error);
+      if (email === "foo@bar.baz"){
+        setMessage(error.response.data.message);
+      } else {
+        setMessage('Error submitting the form.');
+      }
     }
   }
 
