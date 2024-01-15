@@ -92,6 +92,10 @@ function move(direction) {
         setMessage('Invalid move');
     }
   }
+  // Clear the message after a valid move
+  if (nextIndex !== currentIndex) {
+    setMessage('');
+  }
 }
 
   function onChange(evt) {
