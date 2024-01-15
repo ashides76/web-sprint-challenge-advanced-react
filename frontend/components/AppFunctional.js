@@ -155,7 +155,7 @@ function move(direction) {
   }
 
   return (
-    <div id="wrapper" className={props.className}>
+    <div id="wrapper" className={props.className} data-testid="wrapper">
       <div className="info">
         <h3 id="coordinates">{getXYMessage(currentIndex)}</h3>
         <h3 id="steps">You moved {steps} {steps === 1 ? 'time' : 'times'}</h3>
@@ -179,9 +179,9 @@ function move(direction) {
         <button onClick={() => move('down')} id="down">DOWN</button>
         <button onClick={reset} id="reset">reset</button>
       </div>
-      <form onSubmit={onSubmit}>
-        <input id="email" type="email" placeholder="type email" value={email} onChange={onChange}></input>
-        <input id="submit" type="submit"></input>
+      <form data-testid="form" onSubmit={onSubmit}>
+        <input id="email" data-testid="email" type="email" placeholder="type email" value={email} onChange={onChange}></input>
+        <input id="submit" data-testid="submit" type="submit"></input>
       </form>
     </div>
   )
