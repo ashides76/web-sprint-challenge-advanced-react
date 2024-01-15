@@ -11,8 +11,18 @@ describe('AppFunctional Component', () => {
     render(<AppFunctional />);
   });
 
-  test('renders the component', () => {
+  test('renders the component with visible texts in headings, buttons, and links', () => {
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+    expect(screen.getByTestId('coordinates')).toBeInTheDocument();
+    expect(screen.getByTestId('steps')).toBeInTheDocument();
+    expect(screen.getByTestId('left')).toBeInTheDocument();
+    expect(screen.getByTestId('up')).toBeInTheDocument();
+    expect(screen.getByTestId('right')).toBeInTheDocument();
+    expect(screen.getByTestId('down')).toBeInTheDocument();
+    expect(screen.getByTestId('reset')).toBeInTheDocument();
+    expect(screen.getByTestId('form')).toBeInTheDocument();
+    expect(screen.getByTestId('email')).toBeInTheDocument();
+    expect(screen.getByTestId('submit')).toBeInTheDocument();
   });
 
   test('updates email input on change', () => {
