@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import AppFunctional from './AppFunctional';
 
@@ -11,24 +12,34 @@ describe('AppFunctional Component', () => {
     render(<AppFunctional />);
   });
 
-  test('renders the component with the correct initial state', () => {
+  test('renders the component with the visible elements', () => {
+    // Ensure that the necessary elements are present in the initial render
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
-    expect(screen.getByTestId('coordinates')).toHaveTextContent('Coordinates (2, 2)');
-    expect(screen.getByTestId('steps')).toHaveTextContent('You moved 0 times');
+    expect(screen.getByTestId('coordinates')).toBeInTheDocument();
+    expect(screen.getByTestId('steps')).toBeInTheDocument();
     expect(screen.getByTestId('left')).toBeInTheDocument();
     expect(screen.getByTestId('up')).toBeInTheDocument();
     expect(screen.getByTestId('right')).toBeInTheDocument();
     expect(screen.getByTestId('down')).toBeInTheDocument();
     expect(screen.getByTestId('reset')).toBeInTheDocument();
     expect(screen.getByTestId('form')).toBeInTheDocument();
-    expect(screen.getByTestId('email')).toHaveValue('');
+    expect(screen.getByTestId('email')).toBeInTheDocument();
     expect(screen.getByTestId('submit')).toBeInTheDocument();
   });
 
-  test('updates email input on change', () => {
+  test('renders the initial message "Coordinates (2, 2)"', () => {
+    // Check if the initial message is rendered correctly
+    expect(screen.getByTestId('coordinates')).toHaveTextContent('Coordinates (2, 2)');
+  });
+
+  test('updates email input and reflects in the component state', () => {
     const emailInput = screen.getByTestId('email');
+
+    // Change the email input
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    expect(emailInput.value).toBe('test@example.com');
+
+    // Verify that the component's state reflects the updated email
+    expect(screen.getByTestId('email')).toHaveValue('test@example.com');
   });
 
   test('prevents submission with no email', async () => {

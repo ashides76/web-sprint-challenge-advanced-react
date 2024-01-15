@@ -157,10 +157,10 @@ function move(direction) {
   return (
     <div id="wrapper" className={props.className} data-testid="wrapper">
       <div className="info">
-        <h3 id="coordinates">{getXYMessage(currentIndex)}</h3>
-        <h3 id="steps">You moved {steps} {steps === 1 ? 'time' : 'times'}</h3>
+        <h3 id="coordinates" data-testid="coordinates">{getXYMessage(currentIndex)}</h3>
+        <h3 id="steps" data-testid="steps">You moved {steps} {steps === 1 ? 'time' : 'times'}</h3>
       </div>
-      <div id="grid">
+      <div id="grid" data-testid="grid">
         {
           [...Array(gridSize * gridSize).keys()].map(idx => (
             <div key={idx} className={`square${idx === currentIndex ? ' active' : ''}`}>
@@ -170,14 +170,14 @@ function move(direction) {
         }
       </div>
       <div className="info">
-        <h3 id="message">{message}</h3>
+        <h3 id="message" data-testid="message">{message}</h3>
       </div>
-      <div id="keypad">
-        <button onClick={() => move('left')} id="left">LEFT</button>
-        <button onClick={() => move('up')} id="up">UP</button>
-        <button onClick={() => move('right')} id="right">RIGHT</button>
-        <button onClick={() => move('down')} id="down">DOWN</button>
-        <button onClick={reset} id="reset">reset</button>
+      <div id="keypad" data-testid="keypad">
+        <button onClick={() => move('left')} id="left" data-testid="left">LEFT</button>
+        <button onClick={() => move('up')} id="up" data-testid="up">UP</button>
+        <button onClick={() => move('right')} id="right" data-testid="right">RIGHT</button>
+        <button onClick={() => move('down')} id="down" data-testid="down">DOWN</button>
+        <button onClick={reset} id="reset" data-testid="reset">reset</button>
       </div>
       <form data-testid="form" onSubmit={onSubmit}>
         <input id="email" data-testid="email" type="email" placeholder="type email" value={email} onChange={onChange}></input>
